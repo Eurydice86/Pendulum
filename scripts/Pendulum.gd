@@ -38,8 +38,7 @@ func _physics_process(delta):
 	
 	$pivot/mass1.global_position = $pivot.global_position + l1 * Vector2(sin(theta1), cos(theta1))
 	$pivot/mass2.global_position = $pivot.global_position + $pivot/mass1.position + l2 * Vector2(sin(theta2), cos(theta2))
-	$pivot/mass2.rotation = theta2 + PI/2
-	
+	$pivot/mass2.rotation = -theta2	
 	
 	update()
 
