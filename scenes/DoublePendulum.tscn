@@ -1,0 +1,88 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://scenes/ground.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://fonts/typewriter.tres" type="DynamicFont" id=3]
+[ext_resource path="res://scripts/DoublePendulum.gd" type="Script" id=4]
+[ext_resource path="res://scenes/Pendulum.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/Exit.tscn" type="PackedScene" id=6]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 10, 200 )
+
+[node name="DoublePendulum" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 1920.0
+margin_bottom = 1080.0
+color = Color( 0.105882, 0, 0.0117647, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_left = 168.0
+margin_top = 136.0
+margin_right = 808.0
+margin_bottom = 296.0
+custom_fonts/normal_font = ExtResource( 3 )
+text = "A double pendulum, on the other hand, is more unpredictable, even though it's not a complicated construct. Just two bobs and two rods."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+visible = false
+margin_left = 824.0
+margin_top = 304.0
+margin_right = 1328.0
+margin_bottom = 400.0
+custom_fonts/normal_font = ExtResource( 3 )
+text = "But this unpredictability is NOT due to randomness. "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="."]
+visible = false
+margin_left = 1176.0
+margin_top = 464.0
+margin_right = 1720.0
+margin_bottom = 616.0
+custom_fonts/normal_font = ExtResource( 3 )
+text = "It's due to Chaos, i.e. a sensitive dependence on the system's initial conditions."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ground" parent="." instance=ExtResource( 1 )]
+tile_data = PoolIntArray( 65535, 1, 0, 29, 1, 0, 131071, 1, 0, 65565, 1, 0, 196607, 1, 0, 131101, 1, 0, 262143, 1, 0, 196637, 1, 0, 327679, 1, 0, 262173, 1, 0, 393215, 1, 0, 327709, 1, 0, 458751, 1, 0, 393245, 1, 0, 524287, 1, 0, 458781, 1, 0, 589823, 1, 0, 524317, 1, 0, 655359, 1, 0, 589853, 1, 0, 720895, 1, 0, 655389, 1, 0, 786431, 1, 0, 720925, 1, 0, 851967, 1, 0, 786461, 1, 0, 917503, 1, 0, 851997, 1, 0, 983039, 1, 0, 1048575, 1, 0, 1114111, 1, 0, 1048576, 1, 0, 1048577, 1, 0, 1048578, 1, 0, 1048579, 1, 0, 1048580, 1, 0, 1048581, 1, 0, 1048582, 1, 0, 1048583, 1, 0, 1048584, 1, 0, 1048585, 1, 0, 1048586, 1, 0, 1048587, 1, 0, 1048588, 1, 0, 1048589, 1, 0, 1048590, 1, 0, 1048591, 1, 0, 1048592, 1, 0, 1048593, 1, 0, 1048594, 1, 0, 1048595, 1, 0, 1048596, 1, 0, 1048597, 1, 0, 1048598, 1, 0, 1048599, 1, 0, 1048600, 1, 0, 1048601, 1, 0, 1048602, 1, 0, 1048603, 1, 0, 1048604, 1, 0, 1048605, 1, 0, 1048606, 1, 0 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 16, 992 )
+
+[node name="firstTrigger" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="firstTrigger"]
+position = Vector2( 632, 952 )
+shape = SubResource( 1 )
+
+[node name="secondTrigger" type="Area2D" parent="."]
+position = Vector2( 600, -8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="secondTrigger"]
+position = Vector2( 632, 952 )
+shape = SubResource( 1 )
+
+[node name="Pendulum" parent="." instance=ExtResource( 5 )]
+position = Vector2( 656, 264 )
+theta1 = 0.2
+theta2 = 0.4
+
+[node name="Exit" parent="." instance=ExtResource( 6 )]
+position = Vector2( 1944, 960 )
+nextLevel = "res://scenes/TwoDoublePendula.tscn"
+
+[connection signal="body_entered" from="firstTrigger" to="." method="_on_firstTrigger_body_entered"]
+[connection signal="body_entered" from="secondTrigger" to="." method="_on_secondTrigger_body_entered"]
